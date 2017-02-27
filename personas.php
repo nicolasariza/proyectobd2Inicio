@@ -23,10 +23,10 @@
   <a class="navbar-brand" href="index.html"><i class="fa fa-book fa-2x" aria-hidden="true"></i>Bibliocom</a>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="navbar-nav mr-auto mt-2 mt-md-0">
-      <li class="nav-item active badge-default"><!--el badge-deafult es para resaltar el texto inicio-->
+      <li class="nav-item"><!--el badge-deafult es para resaltar el texto inicio-->
         <a class="nav-link" href="index.html"><i class="fa fa-home" aria-hidden="true"></i>     Inicio <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item active badge-default">
         <a class="nav-link" href="personas.php" ><i class="fa fa-address-book" aria-hidden="true"></i>      Personas</a>
       </li>
       <li class="nav-item">
@@ -48,8 +48,7 @@
   </div>
   </div>
 </nav>
-        
-        <div class="container col-sm-6 espacioform"><!-- col-sm-6 para centrar el container-->
+        <div class="container col-sm-5 espacioform"><!-- col-sm-6 para centrar el container-->
           <form>
   <div class="form-group">
     <label for="inputName">Nombre(s)</label>
