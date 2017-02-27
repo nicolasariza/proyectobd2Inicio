@@ -1,3 +1,26 @@
+<?php
+include("php/conectar.php");
+$link = conectar();
+extract($_POST);
+$condicion_tipoDoc ="";
+
+if(isset($sl_tipoDoc))
+{
+    if($sl_tipoDoc!=0)
+      $condicion_tipoDoc = " and id_tipo_doc = $sl_tipoDoc";
+}
+
+$query_filtro = "select nombre_tipo_doc from tipo_doc";
+$query_completa = $query_filtro.$condicion_tipoDoc;
+$result_lista = mysqli_query($link, $query_completa) or die('Error de Conexión, el error está acá (' . mysqli_connect_errno() . ') '
+            . mysqli_connect_error());
+
+
+$query_tipoDoc = "select id_tipo_doc, nombre_tipo_doc from tipo_doc";
+$result_tipoDoc = mysqli_query($link, $query_tipoDoc) or die('Error de Conexión (' . mysqli_connect_errno() . ') '
+            . mysqli_connect_error());
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -69,60 +92,30 @@
     </select>
   </div>
   <div class="form-group">
-    <label for="selectTUsuario">Tipo de documento</label>
-    <select class="form-control" id="selectTUsuario">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
+    <label for="sl_tipoDoc">Tipo de documento</label>
+    <select class="form-control" id="sl_tipoDoc">
+      <option value='0'></option>;
+            <?php
+            while($fila_tipoDoc = mysqli_fetch_array($result_tipoDoc))
+            {
+              extract($fila_tipoDoc);
+              echo "<option value='$id_tipo_doc'>$nombre_tipo_doc</option>";
+                  
+            }         
+            ?>
     </select>
   </div>
   <div class="form-group">
-    <label for="exampleSelect2">Example multiple select</label>
-    <select multiple class="form-control" id="exampleSelect2">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
+    <label for="inputNumDoc">Número de documento</label>
+    <input type="number" class="form-control" id="inputNumDoc" placeholder="Ingrese su número de documento">
+  </div>
+    <div class="form-group">
+    <label for="inputTel">Teléfono</label>
+    <input type="tel" class="form-control" id="inputTel" placeholder="Ingrese su teléfono">
   </div>
   <div class="form-group">
-    <label for="exampleTextarea">Example textarea</label>
-    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputFile">File input</label>
-    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-    <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
-  </div>
-  <fieldset class="form-group">
-    <legend>Radio buttons</legend>
-    <div class="form-check">
-      <label class="form-check-label">
-        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-        Option one is this and that&mdash;be sure to include why it's great
-      </label>
-    </div>
-    <div class="form-check">
-    <label class="form-check-label">
-        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
-        Option two can be something else and selecting it will deselect option one
-      </label>
-    </div>
-    <div class="form-check disabled">
-    <label class="form-check-label">
-        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3" disabled>
-        Option three is disabled
-      </label>
-    </div>
-  </fieldset>
-  <div class="form-check">
-    <label class="form-check-label">
-      <input type="checkbox" class="form-check-input">
-      Check me out
-    </label>
+    <label for="inputDir">Dirección</label>
+    <input type="tel" class="form-control" id="inputDir" placeholder="Ingrese su dirección">
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>

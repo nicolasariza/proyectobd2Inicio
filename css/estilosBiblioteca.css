@@ -176,6 +176,7 @@ textarea {
 
 [type="number"]::-webkit-inner-spin-button,
 [type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
   height: auto; }
 
 [type="search"] {
