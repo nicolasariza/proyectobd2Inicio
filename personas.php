@@ -3,23 +3,26 @@ include("php/conectar.php");
 $link = conectar();
 extract($_POST);
 $condicion_tipoDoc ="";
-
+error_reporting(0);//para no mostrar el error por variables aun no definidas
 if(isset($sl_tipoDoc))
 {
     if($sl_tipoDoc!=0)
       $condicion_tipoDoc = " and id_tipo_doc = $sl_tipoDoc";
 }
-
-$query_filtro = "select nombre_tipo_doc from tipo_doc";
+$query_filtro = "select id_tipo_doc, nombre_tipo_doc from tipo_doc";
 $query_completa = $query_filtro.$condicion_tipoDoc;
 $result_lista = mysqli_query($link, $query_completa) or die('Error de Conexión, el error está acá (' . mysqli_connect_errno() . ') '
             . mysqli_connect_error());
-
-
+if(isset($ins))
+{
+  echo "hola";
+}
+$ins = $link -> query("INSERT INTO persona VALUES ('', '$inputTipoDoc', '$inputNumeroDoc', '$inputNombre','$inputApellido', '$inputTelefono', '$inputDireccion', '$inputTipoUsu')");
 $query_tipoDoc = "select id_tipo_doc, nombre_tipo_doc from tipo_doc";
 $result_tipoDoc = mysqli_query($link, $query_tipoDoc) or die('Error de Conexión (' . mysqli_connect_errno() . ') '
             . mysqli_connect_error());
-
+//echo '<br>'.$inputTipoDoc. $inputNumeroDoc.$inputNombre.$inputApellido.$inputTelefono.$inputDireccion.$inputTipoUsu;
+//echo $enviarForm;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +43,7 @@ $result_tipoDoc = mysqli_query($link, $query_tipoDoc) or die('Error de Conexión
       <header class="encabezado">
           <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse"><!--navbar-light bg-faded-->
           <div class="container">
-  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <a class="navbar-brand" href="index.html"><i class="fa fa-book fa-2x" aria-hidden="true"></i>Bibliocom</a>
@@ -71,19 +74,34 @@ $result_tipoDoc = mysqli_query($link, $query_tipoDoc) or die('Error de Conexión
   </div>
   </div>
 </nav>
+<?php
+/*
+  if ($ins) {
+     echo '<div class="alert alert-success alert-dismissable container col-sm-6 espacioform" role="alert">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Gracias</strong>   Tus datos han sido registrados con éxito
+</div>';
+  }
+  else{
+    echo '<div class="alert alert-danger alert-dismissable container col-sm-6 espacioform" role="alert">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Error</strong>   Por favor verifica los datos
+</div>';
+  }
+ */    ?>
         <div class="container col-sm-5 espacioform"><!-- col-sm-6 para centrar el container-->
-          <form>
+          <form method="POST">
   <div class="form-group">
     <label for="inputName">Nombre(s)</label>
-    <input type="text" class="form-control" id="inputName" aria-describedby="nombre" placeholder="Ingrese su(s) nombre(s)">
+    <input type="text" class="form-control" id="inputName" name="inputNombre" aria-describedby="nombre" placeholder="Ingrese su(s) nombre(s)">
   </div>
   <div class="form-group">
-    <label for="inputApellido">Apellido(s)</label>
-    <input type="text" class="form-control" id="inputApellido" placeholder="Ingrese su(s) apellido(s)">
+    <label for="inputApe">Apellido(s)</label>
+    <input type="text" class="form-control" id="inputApe" name="inputApellido" placeholder="Ingrese su(s) apellido(s)">
   </div>
   <div class="form-group">
-    <label for="selectTUsuario">Tipo de usuario</label>
-    <select class="form-control" id="selectTUsuario">
+    <label for="sl_tUsu">Tipo de usuario</label>
+    <select class="form-control" id="sl_tUsu" name="inputTipoUsu">
       <option>1</option>
       <option>2</option>
       <option>3</option>
@@ -93,13 +111,13 @@ $result_tipoDoc = mysqli_query($link, $query_tipoDoc) or die('Error de Conexión
   </div>
   <div class="form-group">
     <label for="sl_tipoDoc">Tipo de documento</label>
-    <select class="form-control" id="sl_tipoDoc">
+    <select class="form-control" id="sl_tipoDoc" name="inputTipoDoc">
       <option value='0'></option>;
             <?php
             while($fila_tipoDoc = mysqli_fetch_array($result_tipoDoc))
             {
               extract($fila_tipoDoc);
-              echo "<option value='$id_tipo_doc'>$nombre_tipo_doc</option>";
+              echo "<option value='$id_tipo_doc'>$id_tipo_doc - $nombre_tipo_doc</option>";
                   
             }         
             ?>
@@ -107,17 +125,17 @@ $result_tipoDoc = mysqli_query($link, $query_tipoDoc) or die('Error de Conexión
   </div>
   <div class="form-group">
     <label for="inputNumDoc">Número de documento</label>
-    <input type="number" class="form-control" id="inputNumDoc" placeholder="Ingrese su número de documento">
+    <input type="number" class="form-control" id="inputNumDoc" name="inputNumeroDoc" placeholder="Ingrese su número de documento">
   </div>
     <div class="form-group">
     <label for="inputTel">Teléfono</label>
-    <input type="tel" class="form-control" id="inputTel" placeholder="Ingrese su teléfono">
+    <input type="tel" class="form-control" id="inputTel" name="inputTelefono" placeholder="Ingrese su teléfono">
   </div>
   <div class="form-group">
     <label for="inputDir">Dirección</label>
-    <input type="tel" class="form-control" id="inputDir" placeholder="Ingrese su dirección">
+    <input type="tel" class="form-control" id="inputDir" name="inputDireccion" placeholder="Ingrese su dirección">
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary" onclick="<?php $enviarForm = TRUE; ?>">Submit</button>
 </form>
 </div>
       
