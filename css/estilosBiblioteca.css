@@ -11,13 +11,13 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%; 
 }
-.espacioform{
+.espacioform{ /*clase para hacer que el formulario se viera un poco mas abajo y no pegado a la barra de nav*/
   margin-top: 5rem;
 }
 
 body {
-  background-image: url();
-  margin: 0; }
+ /* background-image: url(http://i196.photobucket.com/albums/aa168/jens369/Ancients%20Coven%20Stuff/full_12dark.jpg);
+ */ margin: 0; }
 
 article,
 aside,
@@ -176,7 +176,7 @@ textarea {
 
 [type="number"]::-webkit-inner-spin-button,
 [type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
+  -webkit-appearance: none; 
   height: auto; }
 
 [type="search"] {
