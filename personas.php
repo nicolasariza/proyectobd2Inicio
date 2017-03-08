@@ -4,23 +4,15 @@ $link = conectar();
 extract($_POST);
 $condicion_tipoDoc ="";
 error_reporting(0);//para no mostrar el error por variables aun no definidas
-if(isset($sl_tipoDoc))
-{
-    if($sl_tipoDoc!=0)
-      $condicion_tipoDoc = " and id_tipo_doc = $sl_tipoDoc";
-}
-$query_filtro = "select id_tipo_doc, nombre_tipo_doc from tipo_doc";
-$query_completa = $query_filtro.$condicion_tipoDoc;
-$result_lista = mysqli_query($link, $query_completa) or die('Error de Conexión, el error está acá (' . mysqli_connect_errno() . ') '
-            . mysqli_connect_error());
 if(isset($ins))
 {
   echo "hola";
 }
 $ins = $link -> query("INSERT INTO persona VALUES ('', '$inputTipoDoc', '$inputNumeroDoc', '$inputNombre','$inputApellido', '$inputTelefono', '$inputDireccion', '$inputTipoUsu')");
 $query_tipoDoc = "select id_tipo_doc, nombre_tipo_doc from tipo_doc";
-$result_tipoDoc = mysqli_query($link, $query_tipoDoc) or die('Error de Conexión (' . mysqli_connect_errno() . ') '
-            . mysqli_connect_error());
+$result_tipoDoc = mysqli_query($link, $query_tipoDoc) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$query_tipoUsu = "SELECT id_tipo_usuario, nombre_tipo_usuario FROM tipo_usuario";
+$result_tipoUsu = mysqli_query($link, $query_tipoUsu) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
 //echo '<br>'.$inputTipoDoc. $inputNumeroDoc.$inputNombre.$inputApellido.$inputTelefono.$inputDireccion.$inputTipoUsu;
 //echo $enviarForm;
 ?>
@@ -56,7 +48,7 @@ $result_tipoDoc = mysqli_query($link, $query_tipoDoc) or die('Error de Conexión
         <a class="nav-link" href="personas.php" ><i class="fa fa-address-book" aria-hidden="true"></i>      Personas</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="libros.html"><i class="fa fa-book" aria-hidden="true"></i>      Libros</a>
+        <a class="nav-link" href="libros.php"><i class="fa fa-book" aria-hidden="true"></i>      Libros</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="prestamos.html"><i class="fa fa-bookmark" aria-hidden="true"></i>      Prestamos</a>
@@ -102,11 +94,15 @@ $result_tipoDoc = mysqli_query($link, $query_tipoDoc) or die('Error de Conexión
   <div class="form-group">
     <label for="sl_tUsu">Tipo de usuario</label>
     <select class="form-control" id="sl_tUsu" name="inputTipoUsu">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
+      <option value='0'></option>;
+            <?php
+            while($fila_tipoUsu = mysqli_fetch_array($result_tipoUsu))
+            {
+              extract($fila_tipoUsu);
+              echo "<option value='$id_tipo_usuario'>$nombre_tipo_usuario</option>";
+                  
+            }         
+            ?>
     </select>
   </div>
   <div class="form-group">
@@ -117,7 +113,7 @@ $result_tipoDoc = mysqli_query($link, $query_tipoDoc) or die('Error de Conexión
             while($fila_tipoDoc = mysqli_fetch_array($result_tipoDoc))
             {
               extract($fila_tipoDoc);
-              echo "<option value='$id_tipo_doc'>$id_tipo_doc - $nombre_tipo_doc</option>";
+              echo "<option value='$id_tipo_doc'>$nombre_tipo_doc</option>";
                   
             }         
             ?>
@@ -135,7 +131,7 @@ $result_tipoDoc = mysqli_query($link, $query_tipoDoc) or die('Error de Conexión
     <label for="inputDir">Dirección</label>
     <input type="tel" class="form-control" id="inputDir" name="inputDireccion" placeholder="Ingrese su dirección">
   </div>
-  <button type="submit" class="btn btn-primary" onclick="<?php $enviarForm = TRUE; ?>">Submit</button>
+  <button type="submit" class="btn btn-primary" onclick="<?php $enviarForm = TRUE; ?>">Guardar</button>
 </form>
 </div>
       
