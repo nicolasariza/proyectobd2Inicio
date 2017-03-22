@@ -2,7 +2,6 @@
 include("php/conectar.php");
 $link = conectar();
 extract($_POST);
-$condicion_tipoDoc ="";
 error_reporting(0);//para no mostrar el error por variables aun no definidas
 $ins = "INSERT INTO persona VALUES ('', '$inputTipoDoc', '$inputNumeroDoc', '$inputNombre','$inputApellido', '$inputTelefono', '$inputDireccion', '$inputTipoUsu')";
 $query_tipoDoc = "select id_tipo_doc, nombre_tipo_doc from tipo_doc";
@@ -62,14 +61,22 @@ $result_tipoUsu = mysqli_query($link, $query_tipoUsu) or die('Error de Conexión
   </div>
   </div>
 </nav>
-<?php
-  if ($link->query($ins) === TRUE) {
+<div class="alert alert-success alert-dismissable container col-sm-6 espacioform" role="alert" id="alertaExito" style="display: none">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Gracias</strong>   Tus datos han sido registrados con éxito
+  </div>
+  <div class="alert alert-danger alert-dismissable container col-sm-6 espacioform" role="alert" id="alertaError" style="display: none">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Error</strong>   Por favor verifica los datos
+</div>
+  <?php
+ /* if ($link->query($ins) === TRUE) {
     echo '<div class="alert alert-success alert-dismissable container col-sm-6 espacioform" role="alert">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <strong>Gracias</strong>   Tus datos han sido registrados con éxito
   </div>' ;
   }
-  /*else if(mysqli_num_rows($ins) == 0)
+  else if(mysqli_num_rows($ins) == 0)
   {
     echo '<div class="alert alert-danger alert-dismissable container col-sm-6 espacioform" role="alert">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -127,8 +134,38 @@ $result_tipoUsu = mysqli_query($link, $query_tipoUsu) or die('Error de Conexión
     <label for="inputDir">Dirección</label>
     <input type="tel" class="form-control" id="inputDir" name="inputDireccion" placeholder="Ingrese su dirección" required>
   </div>
+  <?php
+  $insertSi = TRUE;
+  echo mysqli_num_rows($ins);
+  if ($ins) {
+    $insertSi = FALSE;
+  }
+  else{
+    $insertSi = TRUE;
+  }
+   ?>
   <div class="container col-sm-2"> 
-    <button type="submit" class="btn btn-primary">Guardar</button>
+    <button type="submit" class="btn btn-primary" onclick="insertf()">Guardar</button>
+    <?php 
+    if ($insertSi) {
+    ?>
+    <script>
+      function insertf() {
+      document.getElementById('alertaExito').style.display = ''; 
+      }
+    </script>
+    <?php
+    }
+    else{
+    ?>
+    <script>
+      function insertf() {
+      document.getElementById('alertaError').style.display = '';
+      }
+    </script>
+    <?php
+    }
+     ?>
   </div>
   </form>
 </div>
