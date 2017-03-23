@@ -3,11 +3,10 @@ include("php/conectar.php");
 $link = conectar();
 extract($_POST);
 error_reporting(0);//para no mostrar el error por variables aun no definidas
-$ins = $link -> query("INSERT INTO autor (nombre_autor) VALUES ('$inputNombre')");
-$query_autor = "select id_autor, nombre_autor from autor order by id_autor desc limit 1";
-//echo "('', '$inputTitulo', '$inputAutor', '$inputEditorial','$inputGenLit', '$inputAnio', '$inputEdicion', '$inputIdioma')";
-$result_autor = mysqli_query($link, $query_autor) or die('Error de Conexión (' . mysqli_connect_errno() . ') '
-            . mysqli_connect_error()); //Query de autor
+$ins = $link -> query("INSERT INTO editorial (nombre_editorial) VALUES ('$inputEditorial')");
+$query_editorial = "SELECT id_editorial, nombre_editorial FROM editorial ORDER BY id_editorial DESC LIMIT 1";
+$result_editorial = mysqli_query($link, $query_editorial) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error()); //Query editorial
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,24 +28,23 @@ $result_autor = mysqli_query($link, $query_autor) or die('Error de Conexión (' 
         <div class="container col-sm-5 espacioform"><!-- col-sm-6 para centrar el container-->
           <form method="POST">
   <div class="form-group">
-    <label for="inputNombre">Nombre del autor</label>
-    <input type="text" class="form-control" id="inputNombre" name="inputNombre" aria-describedby="nombre" placeholder="Ingrese el nombre del autor">
+    <label for="inputEdi">Nombre de la editorial</label>
+    <input type="text" class="form-control" id="inputEdi" name="inputEditorial" aria-describedby="nombre" placeholder="Ingrese el nombre de la editorial">
   </div>
-    <label for="sl_autor">Autor</label>
-   <div class="input-group"><!--el input group hace que el botón quede al lado-->
-    <select class="form-control" id="sl_autor" name="inputAutor" >
+    <label for="sl_editorial">Editorial</label>
+  <div class="input-group">
+    <select class="form-control" id="sl_editorial" name="inputEdit">
       <option
-      <?php
-            while($fila_autor = mysqli_fetch_array($result_autor))
+        <?php
+            while($fila_editorial = mysqli_fetch_array($result_editorial))
             {
-              extract($fila_autor);
-              echo "<option value='$id_autor'>$nombre_autor</option>";
+              extract($fila_editorial);
+              echo "<option value='$id_editorial'>$nombre_editorial</option>";
             }
             ?>
-    
       ></option>;
-      </select>
-    </div>
+    </select>
+</div> 
   <div class="container col-sm-4">
   <br>
     <button type="submit" class="btn btn-primary" onclick="<?php $enviarForm = TRUE; ?>">Guardar</button>

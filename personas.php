@@ -3,12 +3,11 @@ include("php/conectar.php");
 $link = conectar();
 extract($_POST);
 error_reporting(0);//para no mostrar el error por variables aun no definidas
-$ins = "INSERT INTO persona VALUES ('', '$inputTipoDoc', '$inputNumeroDoc', '$inputNombre','$inputApellido', '$inputTelefono', '$inputDireccion', '$inputTipoUsu')";
+$ins = $link -> query("INSERT INTO persona VALUES ('', '$inputTipoDoc', '$inputNumeroDoc', '$inputNombre','$inputApellido', '$inputTelefono', '$inputDireccion', '$inputTipoUsu')");
 $query_tipoDoc = "select id_tipo_doc, nombre_tipo_doc from tipo_doc";
 $result_tipoDoc = mysqli_query($link, $query_tipoDoc) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
 $query_tipoUsu = "SELECT id_tipo_usuario, nombre_tipo_usuario FROM tipo_usuario";
 $result_tipoUsu = mysqli_query($link, $query_tipoUsu) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
-//echo '<br>'.$inputTipoDoc. $inputNumeroDoc.$inputNombre.$inputApellido.$inputTelefono.$inputDireccion.$inputTipoUsu;
 //echo $enviarForm;
 ?>
 <!DOCTYPE html>
@@ -103,7 +102,6 @@ $result_tipoUsu = mysqli_query($link, $query_tipoUsu) or die('Error de Conexión
             {
               extract($fila_tipoUsu);
               echo "<option value='$id_tipo_usuario'>$nombre_tipo_usuario</option>";
-                  
             }         
             ?>
     </select>
@@ -134,20 +132,15 @@ $result_tipoUsu = mysqli_query($link, $query_tipoUsu) or die('Error de Conexión
     <label for="inputDir">Dirección</label>
     <input type="tel" class="form-control" id="inputDir" name="inputDireccion" placeholder="Ingrese su dirección" required>
   </div>
-  <?php
-  $insertSi = TRUE;
-  echo mysqli_num_rows($ins);
-  if ($ins) {
-    $insertSi = FALSE;
-  }
-  else{
-    $insertSi = TRUE;
-  }
-   ?>
   <div class="container col-sm-2"> 
     <button type="submit" class="btn btn-primary" onclick="insertf()">Guardar</button>
-    <?php 
-    if ($insertSi) {
+    <script type="text/javascript">
+      function insertf(){
+        alert ("Exito");
+      }
+    </script>
+<!--    <?php 
+    if ($ins) {
     ?>
     <script>
       function insertf() {
@@ -165,7 +158,7 @@ $result_tipoUsu = mysqli_query($link, $query_tipoUsu) or die('Error de Conexión
     </script>
     <?php
     }
-     ?>
+     ?>-->
   </div>
   </form>
 </div>

@@ -107,7 +107,7 @@ $result_idioma = mysqli_query($link, $query_idioma) or die('Error de Conexión (
             }
             ?>
     </select>
-        <button class="btn btn-primary" type="button">Añadir editorial</button>
+        <button class="btn btn-primary" type="button" onclick="window.open('editorial.php','','top=150, left=300,width=700,height=400,noresize')">Añadir editorial</button>
   </div>  
   <br><label for="sl_genLit">Genero literario</label>
   <div class="input-group">
@@ -121,7 +121,7 @@ $result_idioma = mysqli_query($link, $query_idioma) or die('Error de Conexión (
             }
             ?>
     </select>
-        <button class="btn btn-primary" type="button">Añadir Género</button>
+        <button class="btn btn-primary" type="button" onclick="window.open('generoLit.php','','top=150, left=300,width=700,height=400,noresize')">Añadir Género</button>
   </div>
   <div class="form-group">
     <br><label for="inputAnio">Año</label>
@@ -143,11 +143,42 @@ $result_idioma = mysqli_query($link, $query_idioma) or die('Error de Conexión (
             }
             ?>
     </select>
-        <button class="btn btn-primary" type="button">Añadir Idioma</button>
+        <button class="btn btn-primary" type="button" onclick="window.open('idioma.php','','top=150, left=300,width=700,height=400,noresize')">Añadir Idioma</button>
   </div>
   <div class="container col-sm-2">
   <br>
-    <button type="submit" class="btn btn-primary" onclick="<?php $enviarForm = TRUE; ?>">Guardar</button>
+    <?php
+  $insertSi = TRUE;
+  $idinfo = mysqli_num_rows($ins);
+  echo $idinfo."  eeeee";
+  if ($ins) {
+    $insertSi = FALSE;
+  }
+  else{
+    $insertSi = TRUE;
+  }
+   ?>
+    <button type="submit" class="btn btn-primary" onclick="insertf()">Guardar</button>
+     <?php 
+    if ($insertSi) {
+    ?>
+    <script>
+      function insertf() {
+      document.getElementById('alertaExito').style.display = ''; 
+      }
+    </script>
+    <?php
+    }
+    else{
+    ?>
+    <script>
+      function insertf() {
+      document.getElementById('alertaError').style.display = '';
+      }
+    </script>
+    <?php
+    }
+     ?>
   </div>
  </form>
 </div>
@@ -156,29 +187,5 @@ $result_idioma = mysqli_query($link, $query_idioma) or die('Error de Conexión (
     <footer class="container col-sm-2 espacioform">
       <p class="font-italic">Nicolas Ariza - Biblioteca ©</p>
     </footer>
-    <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
   </body>
 </html>

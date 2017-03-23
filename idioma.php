@@ -3,11 +3,10 @@ include("php/conectar.php");
 $link = conectar();
 extract($_POST);
 error_reporting(0);//para no mostrar el error por variables aun no definidas
-$ins = $link -> query("INSERT INTO autor (nombre_autor) VALUES ('$inputNombre')");
-$query_autor = "select id_autor, nombre_autor from autor order by id_autor desc limit 1";
-//echo "('', '$inputTitulo', '$inputAutor', '$inputEditorial','$inputGenLit', '$inputAnio', '$inputEdicion', '$inputIdioma')";
-$result_autor = mysqli_query($link, $query_autor) or die('Error de Conexión (' . mysqli_connect_errno() . ') '
-            . mysqli_connect_error()); //Query de autor
+$ins = $link -> query("INSERT INTO idioma (nombre_idioma) VALUES ('$inputIdioma')");
+$query_idioma = "SELECT id_idiom, nombre_idioma FROM idioma ORDER BY id_idioma DESC LIMIT 1";
+$result_idioma = mysqli_query($link, $query_idioma) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error()); //Query editorial
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,21 +28,20 @@ $result_autor = mysqli_query($link, $query_autor) or die('Error de Conexión (' 
         <div class="container col-sm-5 espacioform"><!-- col-sm-6 para centrar el container-->
           <form method="POST">
   <div class="form-group">
-    <label for="inputNombre">Nombre del autor</label>
-    <input type="text" class="form-control" id="inputNombre" name="inputNombre" aria-describedby="nombre" placeholder="Ingrese el nombre del autor">
+    <label for="inputIdioma">Nombre del idioma</label>
+    <input type="text" class="form-control" id="inputIdioma" name="inputIdioma" aria-describedby="nombre" placeholder="Ingrese el idioma">
   </div>
-    <label for="sl_autor">Autor</label>
-   <div class="input-group"><!--el input group hace que el botón quede al lado-->
-    <select class="form-control" id="sl_autor" name="inputAutor" >
+     <label for="sl_idioma">Idioma</label>
+  <div class="input-group">
+    <select class="form-control" id="sl_idioma" name="inputIdioma">
       <option
-      <?php
-            while($fila_autor = mysqli_fetch_array($result_autor))
+              <?php
+            while($fila_idioma = mysqli_fetch_array($result_idioma))
             {
-              extract($fila_autor);
-              echo "<option value='$id_autor'>$nombre_autor</option>";
+              extract($fila_idioma);
+              echo "<option value='$id_idioma'>$nombre_idioma</option>";
             }
             ?>
-    
       ></option>;
       </select>
     </div>
