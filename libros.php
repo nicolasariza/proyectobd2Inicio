@@ -14,8 +14,6 @@ $query_genLit = "SELECT id_genero_lit, nombre_genero_lit FROM genero_lit";
 $result_genLit = mysqli_query($link, $query_genLit) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error()); //Query genero literario
 $query_idioma = "SELECT id_idioma, nombre_idioma FROM idioma";//consulta a la base de datos
 $result_idioma = mysqli_query($link, $query_idioma) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error()); //Query idioma - se llama a la conexión
-//echo '<br>'.$inputTipoDoc. $inputNumeroDoc.$inputNombre.$inputApellido.$inputTelefono.$inputDireccion.$inputTipoUsu;
-//echo $enviarForm;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -147,39 +145,8 @@ $result_idioma = mysqli_query($link, $query_idioma) or die('Error de Conexión (
   </div>
   <div class="container col-sm-2">
   <br>
-    <?php
-  $insertSi = TRUE;
-  $idinfo = mysqli_num_rows($ins);
-  echo $idinfo."  eeeee";
-  if ($ins) {
-    $insertSi = FALSE;
-  }
-  else{
-    $insertSi = TRUE;
-  }
-   ?>
-    <button type="submit" class="btn btn-primary" onclick="insertf()">Guardar</button>
-     <?php 
-    if ($insertSi) {
-    ?>
-    <script>
-      function insertf() {
-      document.getElementById('alertaExito').style.display = ''; 
-      }
-    </script>
-    <?php
-    }
-    else{
-    ?>
-    <script>
-      function insertf() {
-      document.getElementById('alertaError').style.display = '';
-      }
-    </script>
-    <?php
-    }
-     ?>
-  </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
  </form>
 </div>
       </header>

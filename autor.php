@@ -49,7 +49,7 @@ $result_autor = mysqli_query($link, $query_autor) or die('Error de Conexión (' 
     </div>
   <div class="container col-sm-4">
   <br>
-    <button type="submit" class="btn btn-primary" onclick="<?php $enviarForm = TRUE; ?>">Guardar</button>
+    <button type="submit" class="btn btn-primary">Guardar</button>
   </div>
  </form>
 </div>
